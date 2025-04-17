@@ -20,14 +20,13 @@ import pandas as pd
 
 
 #figure out file locations
-script_dir = os.path.dirname(__file__)
 spectra_files = [
     r"spectra\\15yr_geo_solar.txt",
     r"spectra\\15yr_geo_trapped.txt"
 ]
 spectra_paths = []
 for spectra_file in spectra_files:
-    spectra_paths.append(os.path.join(script_dir, spectra_file))
+    spectra_paths.append(os.path.join(trim_config.script_dir, spectra_file))
 
 #lines in each file that mean we've gotten to real data lines
 solar_last_header = r"'Exposure','hrs', 1,'Proton Exposure Time'"
@@ -99,7 +98,6 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
     foo = extract_data(spectra_paths[0])
     plt.plot(foo[:, 0], foo[:, 1])
-    plt.plot(new_energies, combined_spectra)
     foo = extract_data(spectra_paths[1])
     plt.plot(foo[:,0], foo[:,1])
     plt.plot(new_energies, combined_spectra)

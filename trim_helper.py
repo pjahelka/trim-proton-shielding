@@ -3,6 +3,8 @@
 import os
 import numpy as np
 import pandas as pd
+
+import import_spectra
 import trim_config
 import collections
 
@@ -25,9 +27,9 @@ def config_trim(energy, thickness, angle, particle_number):
         lines[16] = f'1 "SiO2 - quartz (ICRU-245)" {thickness*10*1000} 2.32 .666667 .333333\n' #set thickness of glass
     with open(trim_config.trim_in, 'w') as file:
         file.writelines(lines)
-    print(
-        f'Setup TRIM for {energy:.3e}, MeV, {thickness:.1f}, um, {angle:.1f} deg, {particle_number:.0E} protons'
-    )
+    #print(
+    #    f'Setup TRIM for {energy:.3e}, MeV, {thickness:.1f}, um, {angle:.1f} deg, {particle_number:.0E} protons'
+    #)
 #argument is energy in eV, thickness in um, angle in deg
 def run_trim():
     #delete previous transmitted protons to avoid bugs with incomplete runs
@@ -39,22 +41,31 @@ def run_trim():
     os.system(trim_config.trim_exec)
     return 0
 
-#load the proton spectrum file and return its energies
-def get_spectrum_energies():
-    data = pd.read_csv(trim_config.proton_spectrum_file)
-    return data['Energy, MeV'].to_numpy()
-
+#take the proton density spectrum and convert it to number of protons with a given energy. returned energy is the upper end
+#of each interval
+def calc_simulated_spectrum():
+    #load the spectrum
+    density_spectrum = pd.read_csv(trim_config.proton_spectrum_file)
+    density_flux = density_spectrum['DFlux, cm-2 MeV-1'].to_numpy()
+    energies = density_spectrum['Energy, MeV'].to_numpy()
+    #calculate the integrands
+    integrands = 0.5 * (density_flux + np.roll(density_flux, 1)) * (energies - np.roll(energies, 1))
+    integrands = integrands[1:]
+    energies = energies[1:]
+    return energies, integrands
+#calculate as global because it depends on static file
+simulated_spectrum = calc_simulated_spectrum()
 #Make energy grid for the protons doing the damage, in MeV. min is an arbitrary IR cutoff. Max come from the spectra
 #and is therefore in trim_helper because it requires calculations
-damage_min_energy = 0.01
-damage_max_energy = max(get_spectrum_energies())
-damage_decades = np.log10(damage_max_energy / damage_min_energy)
+
+damage_max_energy = max(simulated_spectrum[0])
+damage_decades = np.log10(damage_max_energy / trim_config.damage_min_energy)
 damage_num_samp = round(damage_decades * trim_config.energies_per_decade)
-damage_energies = np.logspace(np.log10(damage_min_energy), np.log10(damage_max_energy), damage_num_samp)
+damage_energies = np.logspace(np.log10(trim_config.damage_min_energy), np.log10(damage_max_energy), damage_num_samp)
 
 
-def read_transmission(fname): #parses a TRIM transmission file to get the transmitted energies
-    data = pd.read_csv(fname, delimiter = r"\s+", header = 11, usecols=[3], names = ['Energy, eV'])
+def read_transmission(): #parses a TRIM transmission file to get the transmitted energies
+    data = pd.read_csv(trim_config.trim_transmit, delimiter = r"\s+", header = 11, usecols=[3], names = ['Energy, eV'])
     #add a column for MeV energy, which will be the default in the rest of the program
     data['Energy, MeV'] = data['Energy, eV'].apply(lambda x: x/1E6)
     return data
@@ -118,9 +129,18 @@ def bisect_search(x, f):
             f_mid = f(mid)
             error = right_idx - left_idx
     #return the left-hand side of the suspected zero
-    return left_idx, left, f(left)
+    return left_idx, left, f_left
 
-
+#calculate what fraction of the protons should be shot in at each angle
+def calc_angle_weights():
+    angle_weights = []
+    num_angle = len(trim_config.angles)
+    for idx in range(num_angle - 1): #exclude 90deg
+        weight = 0.25*(np.cos(trim_config.angles[idx] * np.pi / 180)**2 - np.cos(trim_config.angles[idx + 1] * np.pi / 180)**2)
+        angle_weights.append(weight)
+    return angle_weights
+#calculate because constant that depends on config
+angle_weight = calc_angle_weights()
 
 if __name__ == '__main__':
     def f(x):

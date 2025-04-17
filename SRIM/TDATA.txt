@@ -3,17 +3,17 @@
 =======================================
       Data  of  TRIM  Calculation      
 =======================================
-====== TRIM Calc.=  H(663. keV) ==> SiO2 - quartz (ICRU-245)(  2 um) =========
+====== TRIM Calc.=  H(413. keV) ==> SiO2 - quartz (ICRU-245)(  5 um) =========
 ------------------------------------------------------------------------------
 --------------------------------------------------------------------
     Recoil/Damage Calculations made with Kinchin-Pease Estimates    
 --------------------------------------------------------------------
 Ion =  H ( 1)   Ion Mass= 001.0080
-Energy  = 6637329.E-04 keV
-Ion Angle to Surface = 20 degrees
+Energy  = 4135186.E-04 keV
+Ion Angle to Surface = 60 degrees
 ============= TARGET MATERIAL ======================================
   Layer # 1 - SiO2 - quartz (ICRU-245)
-  Layer # 1 - Bottom Depth=     2.E+04 A
+  Layer # 1 - Bottom Depth=     5.E+04 A
   Layer # 1- Density = 6.975E22 atoms/cm3 = 2.32 g/cm3
   Layer # 1-  O = 66.6 Atomic Percent = 53.2 Mass Percent
   Layer # 1- Si = 33.3 Atomic Percent = 46.7 Mass Percent
@@ -23,15 +23,15 @@ Target energies for target atom =  O
 Target energies for target atom = Si
     Displacement = 15 eV, Binding = 2 eV, Surface = 4.7 eV
 ====================================================================
-Depth Range of Tabulated Data=  000000.E+00  -  200000.E-01  Angstroms
+Depth Range of Tabulated Data=  000000.E+00  -  500000.E-01  Angstroms
 ====================================================================
-Total Ions calculated =  009999
-Average Range         =   00000.E+00 Angstroms
-Average Straggling    =   00000.E+00 Angstroms
-Average Vacancy/Ion   =   97900.E-05
+Total Ions calculated =  000010
+Average Range         =   19441.E+00 Angstroms
+Average Straggling    =   50932.E-01 Angstroms
+Average Vacancy/Ion   =   24538.E-03
 ====================================================================
-Total Backscattered Ions=  1 
-Total Transmitted Ions  =  9999 
+Total Backscattered Ions=  0 
+Total Transmitted Ions  =  0 
 ====================================================================
 See files SRIM Outputs\*.txt for tables :
    TDATA.txt    -- Details of the calculation.
