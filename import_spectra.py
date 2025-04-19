@@ -14,30 +14,11 @@ with different values so the logic below is horrible
 import os
 import numpy as np
 import trim_config
-import trim_helper
 import re
 import pandas as pd
 
-
-#figure out file locations
-spectra_files = [
-    r"spectra\\15yr_geo_solar.txt",
-    r"spectra\\15yr_geo_trapped.txt"
-]
-spectra_paths = []
-for spectra_file in spectra_files:
-    spectra_paths.append(os.path.join(trim_config.script_dir, spectra_file))
-
-#lines in each file that mean we've gotten to real data lines
-solar_last_header = r"'Exposure','hrs', 1,'Proton Exposure Time'"
-trapped_last_header = r"'DFlux','cm!u-2!n s!u-1!n MeV!u-1!n', 1,'Differential Flux'"
-trapped_duration_line = 43 - 1 #line number of mission duration for trapped spectra. This may vary SPENVIS-run to SEPNVIS-run
-
-#and the end of data line
-first_footer = r"'End of Block'"
-
 def extract_data(file):
-    duration = 0 #length of segment, used for figuring out if trapped proton spectra
+    """Parse a SPENVIS proton spectrum file"""
     data = []
     data_line = False
     trapped = False #for figuring out if we need to deal with duration
@@ -60,15 +41,15 @@ def extract_data(file):
             if data_line:
                 data.append(np.fromstring(line, sep=','))
     data = np.array(data)
-    data = data[:,[0,2]] #select energies and DFlux
+    data = data[:,[0,1]] #select energies and IFlux
     if trapped:
         data[:,1] = data[:,1] * duration #turn flux/s to flux for trapped spectra
     #get rid of rows with zero-fluxes
     mask = data[:,1] != 0
     return data[mask]
 
-def combine_spectra(spectra_table): #argument is a list of proton spectra
-    #find the extremal energies in the data
+def combine_spectra(spectra_table):
+    """Combine spectra into a single file"""
     min_energies = []
     max_energies = []
     for spectra in spectra_table:
@@ -78,19 +59,43 @@ def combine_spectra(spectra_table): #argument is a list of proton spectra
     max_energy = max(max_energies)
     #calculate how many decades of data and the number of sample points
     decades = np.log10(max_energy/min_energy)
-    num_samp = round(decades * trim_config.energies_per_decade)
+    num_samp = round(decades * trim_config.SPECTRUM_ENERGIES_PER_DECADE)
     #generate the new energy grid to use
     new_energies = np.logspace(np.log10(min_energy), np.log10(max_energy), num_samp)
     resampled_spectra = []
     #resample the spectra using logarithmic interpolation
     for spectra in spectra_table:
-        resampled_spectrum = trim_helper.log_interp(new_energies, spectra[:, 0], spectra[:, 1])
+        resampled_spectrum = log_interp(new_energies, spectra[:, 0], spectra[:, 1])
         resampled_spectra.append(resampled_spectrum)
     #sum and return
     resampled_spectrum = np.sum(resampled_spectra, axis = 0)
     return new_energies, resampled_spectrum
 
+def log_interp(x, xp, fp):
+    """logarithmic interpolator"""
+    log_fp = np.log(fp)
+    new_fp = np.interp(x, xp, log_fp, right=0)
+    new_fp = np.exp(new_fp)
+    return new_fp
+
+#do the combining and plot for the above file list
 if __name__ == "__main__":
+    # figure out file locations
+    spectra_files = [
+        r"spectra\\15yr_geo_solar.txt",
+        r"spectra\\15yr_geo_trapped.txt"
+    ]
+    spectra_paths = []
+    for spectra_file in spectra_files:
+        spectra_paths.append(os.path.join(trim_config.SCRIPT_DIR, spectra_file))
+
+    # lines in each file that mean we've gotten to real data lines
+    solar_last_header = r"'Exposure','hrs', 1,'Proton Exposure Time'"
+    trapped_last_header = r"'DFlux','cm!u-2!n s!u-1!n MeV!u-1!n', 1,'Differential Flux'"
+    trapped_duration_line = 43 - 1  # line number of mission duration for trapped spectra. This may vary SPENVIS-run to SEPNVIS-run
+
+    # and the end of data line
+    first_footer = r"'End of Block'"
     spectra = []
     for spectra_path in spectra_paths:
         spectra.append(extract_data(spectra_path))
@@ -104,5 +109,5 @@ if __name__ == "__main__":
     plt.yscale('log')
     plt.xscale('log')
     plt.show()
-    df = pd.DataFrame(data=np.transpose([new_energies, combined_spectra]), columns=['Energy, MeV', 'DFlux, cm-2 MeV-1'])
-    df.to_csv(trim_config.proton_spectrum_file)
+    df = pd.DataFrame(data=np.transpose([new_energies, combined_spectra]), columns=['Energy, MeV', 'IFlux, cm-2'])
+    df.to_csv(trim_config.PROTON_SPECTRUM_FILE)
