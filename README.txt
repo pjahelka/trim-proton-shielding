@@ -1,4 +1,4 @@
-This program is for simulating proton transmission through thin radiation shields where MC-SCREAM and EQFLUX are inadequate because MC-SCREAM overestimates low-energy proton damage and EQFLUX underestimates low-energy proton transmission. The code includes a SRIM application folder that includes a shortcut to TRIM that will run it minimized which will dramatically enhance simulation speed.
+This program is for simulating proton transmission through thin solar cell proton shields where MC-SCREAM and EQFLUX are inadequate because the NIEL method of MC-SCREAM overestimates low-energy proton damage and EQFLUX underestimates low-energy proton transmission. The code has two main steps. First is calculating a proton scattering matrix using TRIM that can be used to determine the proton-spectrum after the radiation shield. The second is then uisng the slowed spectrum and a relative damage coefficient (RDC) model to calculate equivalent fluences that can then be used for predicting performance degredation.
 
 It's important to setup the shield layers via the TRIM GUI and then edit the code in trim_helper.config_trim for your shield stack.
 
@@ -11,3 +11,4 @@ The default energy unit is MeV, but TRIM uses both keV and eV, so there are unit
 
 Use calc_transmitted_spectrum for calculating the trasmitted proton spectrum. This can take a while. You can save the calculated scattering matrix and analysis functions will assume it's been saved under trim_config.SCATTERING_MATRIX_FILE.
 
+The code includes a SRIM application folder that includes a shortcut to TRIM that will run it minimized which will dramatically enhance simulation speed.
