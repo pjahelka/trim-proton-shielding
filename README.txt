@@ -21,3 +21,5 @@ PROTONS_TEST_BLOCK = 1E1
 SPECTRUM_ENERGIES_PER_DECADE = 20
 
 On an 8840HS CPU, a simulation takes about five minutes, limited by TRIM calling the Windows display server.
+
+This work is supported by the Caltech Space Solar Power Project.
