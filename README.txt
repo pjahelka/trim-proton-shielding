@@ -4,10 +4,10 @@ It's important to setup the shield layers via the TRIM GUI and then edit the cod
 
 Run the import_spectra script to combine SPENVIS proton spectra into a single file for later usage. It has magic constants for line identification you may need to edit.
 
-There are two different energy discretization grids. One for the incoming proton spectrum and one for the shielded spectrum.
-This is because the proton RDC data extends to lower energies than the proton spectrum data.
+There are three different energy discretization grids. One for combinding SPENVIS spectra, one for the TRIM simulation energies, and one for the shielded spectrum.
+Fine SPENVIS and shielded spectra are computationally cheap, the TRIM simulations are computationally expensive.
 
-The default energy unit is MeV, but TRIM uses both keV and eV, so there are unit conversions floating around
+The default energy unit is MeV, but TRIM uses both keV and eV, so there are unit conversions floating around in the code.
 
-Use calc_transmitted_spectrum for calculating the trasmitted proton spectrum. This can take a while. You can save the
-spectrum, and analysis functions will assume it's been saved under trim_config.SCATTERING_MATRIX_FILE
+Use calc_transmitted_spectrum for calculating the trasmitted proton spectrum. This can take a while. You can save the calculated scattering matrix and analysis functions will assume it's been saved under trim_config.SCATTERING_MATRIX_FILE.
+
