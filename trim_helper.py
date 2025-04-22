@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import trim_config
 import collections
+import subprocess
 
 def config_trim(energy, thickness, angle, particle_number):
     """setup TRIM.IN and TRIMAUTO for a trim simulation energy in MeV, thickness in um"""
@@ -24,6 +25,8 @@ def config_trim(energy, thickness, angle, particle_number):
     with open(trim_config.TRIM_IN, 'w') as file:
         file.writelines(lines)
 
+
+
 def run_trim():
     """Run the prepared TRIM simulation"""
     #delete previous transmitted protons to avoid bugs with incomplete runs
@@ -32,7 +35,7 @@ def run_trim():
     except FileNotFoundError:
         pass
     #run trim
-    os.system(trim_config.TRIM_EXEC)
+    subprocess.call(trim_config.TRIM_EXEC, shell=True)
     return 0
 
 

@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 #SiO2 thickness in um
-SHIELD_THICKNESS = 10
+SHIELD_THICKNESS = 20
 
 #figure out file locations
 SCRIPT_DIR = os.path.dirname(__file__)
@@ -21,7 +21,7 @@ SCATTERING_MATRIX_FILE = 'scattering_matrix.npy'
 #file for the proton RDC
 PROTON_RDC_FILE = r'RDCs\gaas_proton_efficiency.csv'
 
-PROTONS_SIMULATE = 1E1 #number of protons to fire in real experiment
+PROTONS_SIMULATE = 1E2 #number of protons to fire in real experiment
 PROTONS_TEST_TRANSMIT = 1E1 #number of particles for testing for full transmission
 PROTONS_TEST_BLOCK = 1E1 #number of particles for testing for full blocking
 SAFETY_IDX = 1 #how many energy indices to extend the interesting range. Just in case.

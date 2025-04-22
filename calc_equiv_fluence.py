@@ -50,7 +50,7 @@ def calc_fluence(slowed_spectrum, rdc, factor):
 
 if __name__ == "__main__":
     # foo = load_proton_rdc(trim_config.PROTON_RDC_FILE)
-    # import matplotlib.pyplot as plt
+    import matplotlib.pyplot as plt
     # plt.plot(trim_helper.DAMAGE_ENERGIES, foo)
     # raw_rdc = pd.read_csv(trim_config.PROTON_RDC_FILE).to_numpy()
     # plt.plot(raw_rdc[:,0], raw_rdc[:,1])
@@ -60,6 +60,12 @@ if __name__ == "__main__":
     import calc_transmitted_spectrum
     calc_transmitted_spectrum.calc_scattering_matrix()
     spectrum = calc_transmitted_spectrum.calc_transmitted_spectrum()
+    plt.plot(trim_helper.DAMAGE_ENERGIES, trim_helper.calc_IFlux(spectrum))
+    plt.xscale('log')
+    #plt.yscale('log')
+    plt.show()
+
+
     rdc = load_proton_rdc(trim_config.PROTON_RDC_FILE)
     foo = calc_fluence(spectrum, rdc, trim_config.POWER_PROTONS_TO_ELECTRONS)
     print(f'{foo:.2e}')
