@@ -24,19 +24,19 @@ def extract_data(file):
     trapped = False #for figuring out if we need to deal with duration
     with open(file) as f:
         lines = f.readlines()
-        duration = re.findall(r"\d+\.\d+", lines[trapped_duration_line])  # extract duration in days
+        duration = re.findall(r"\d+\.\d+", lines[trim_config.TRAPPED_DURATION_LINE])  # extract duration in days
         if duration:
             duration = float(duration[0])
             duration = duration * 31.5E6  # convert to seconds
         for line in lines:
-            if line.startswith(solar_last_header): #figure out if start of data block and if trapped or solar
+            if line.startswith(trim_config.SOLAR_LAST_HEADER): #figure out if start of data block and if trapped or solar
                 data_line = True
                 continue
-            if line.startswith(trapped_last_header):
+            if line.startswith(trim_config.TRAPPED_LAST_HEADER):
                 data_line = True
                 trapped = True
                 continue
-            if line.startswith(first_footer): #figure out if end of data block
+            if line.startswith(trim_config.FIRST_FOOTER): #figure out if end of data block
                 break
             if data_line:
                 data.append(np.fromstring(line, sep=','))
@@ -59,7 +59,7 @@ def combine_spectra(spectra_table):
     max_energy = max(max_energies)
     #calculate how many decades of data and the number of sample points
     decades = np.log10(max_energy/min_energy)
-    num_samp = round(decades * trim_config.SPECTRUM_ENERGIES_PER_DECADE)
+    num_samp = round(decades * trim_config.ENERGIES_PER_DECADE_IMPORT)
     #generate the new energy grid to use
     new_energies = np.logspace(np.log10(min_energy), np.log10(max_energy), num_samp)
     resampled_spectra = []
@@ -78,36 +78,24 @@ def log_interp(x, xp, fp):
     new_fp = np.exp(new_fp)
     return new_fp
 
-#do the combining and plot for the above file list
-if __name__ == "__main__":
+def save_combined_spectrum():
+    """quickly recaculate the incident spectrum file.
+
+    Only really used this during convergence testing"""
     # figure out file locations
-    spectra_files = [
-        r"spectra\\15yr_geo_solar.txt",
-        r"spectra\\15yr_geo_trapped.txt"
-    ]
+
     spectra_paths = []
-    for spectra_file in spectra_files:
+    for spectra_file in trim_config.SPECTRA_FILES:
         spectra_paths.append(os.path.join(trim_config.SCRIPT_DIR, spectra_file))
 
-    # lines in each file that mean we've gotten to real data lines
-    solar_last_header = r"'Exposure','hrs', 1,'Proton Exposure Time'"
-    trapped_last_header = r"'DFlux','cm!u-2!n s!u-1!n MeV!u-1!n', 1,'Differential Flux'"
-    trapped_duration_line = 43 - 1  # line number of mission duration for trapped spectra. This may vary SPENVIS-run to SEPNVIS-run
-
-    # and the end of data line
-    first_footer = r"'End of Block'"
     spectra = []
     for spectra_path in spectra_paths:
         spectra.append(extract_data(spectra_path))
     new_energies, combined_spectra = combine_spectra(spectra)
-    import matplotlib.pyplot as plt
-    foo = extract_data(spectra_paths[0])
-    plt.plot(foo[:, 0], foo[:, 1])
-    foo = extract_data(spectra_paths[1])
-    plt.plot(foo[:,0], foo[:,1])
-    plt.plot(new_energies, combined_spectra)
-    plt.yscale('log')
-    plt.xscale('log')
-    plt.show()
     df = pd.DataFrame(data=np.transpose([new_energies, combined_spectra]), columns=['Energy, MeV', 'IFlux, cm-2'])
     df.to_csv(trim_config.PROTON_SPECTRUM_FILE)
+    return df
+
+if __name__ == "__main__":
+    save_combined_spectrum()
+

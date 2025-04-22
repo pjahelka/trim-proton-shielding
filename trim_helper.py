@@ -41,15 +41,20 @@ def calc_simulated_spectrum():
 
     take the proton integrated flux spectrum and convert it to number of protons with a given energy.
     """
-
     #load the spectrum
     proton_spectrum = pd.read_csv(trim_config.PROTON_SPECTRUM_FILE)
     integral_flux = proton_spectrum['IFlux, cm-2'].to_numpy()
     energies = proton_spectrum['Energy, MeV'].to_numpy()
+    # calculate the new energy grid
+    num_decades = np.log10(max(energies) / min(energies))
+    new_energies = np.logspace(np.log10(min(energies)), np.log10(max(energies)),
+                               round(num_decades * trim_config.SPECTRUM_ENERGIES_PER_DECADE), endpoint=True)
+    new_iflux = np.interp(new_energies, energies, integral_flux)
     #calculate the proton counts. All UV protons go into the highest bin. Differences are used for the rest.
-    protons = integral_flux - np.roll(integral_flux, -1)
-    protons[-1] = integral_flux[-1]
-    ret = np.transpose([np.array(energies), np.array(protons)])
+    protons = new_iflux - np.roll(new_iflux, -1)
+    protons[-1] = new_iflux[-1]
+
+    ret = np.transpose([np.array(new_energies), np.array(protons)])
     return ret
 #calculate as global because it depends on static file
 SIMULATED_SPECTRUM = calc_simulated_spectrum()
@@ -146,9 +151,15 @@ def calc_IFlux(fluxes):
     return np.flip(cumsum)
 
 if __name__ == '__main__':
-    #foo = calc_simulated_spectrum()
-    #print(foo)
+    import matplotlib.pyplot as plt
+    total_protons = []
+    for j in range(4,20,5):
+        trim_config.SPECTRUM_ENERGIES_PER_DECADE = j
+        SIMULATED_SPECTRUM = calc_simulated_spectrum()
+        total_protons.append(sum(SIMULATED_SPECTRUM[:,1]))
+    #plt.xscale('log')
+    #plt.yscale('log')
+    plt.plot(total_protons)
+    plt.legend()
+    plt.show()
 
-    foo = np.arange(5) + 1
-    print(foo)
-    print(np.cumsum(foo))

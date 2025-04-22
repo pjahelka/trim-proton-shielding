@@ -6,11 +6,11 @@ import numpy as np
 import find_non_trivial_sims
 import trim_helper
 
-
-#calculate the matrix that describes how protons are slowed. It has three axes: angle of incidence, incident energy,
-#and transmitted energy
 def calc_scattering_matrix():
-    """Do the TRIM simulations necessary to construct the scattering matrix"""
+    """Do the TRIM simulations necessary to construct the scattering matrix
+
+    It has three axes: angle of incidence, incident energy,
+    and transmitted energy"""
     run_energies = trim_helper.SIMULATED_SPECTRUM[:,0]
     #calculate the interesting energies for each angle
     energy_bounds = find_non_trivial_sims.find_energy_bounds()
@@ -70,4 +70,4 @@ if __name__ == "__main__":
     plt.xscale('log')
     plt.yscale('log')
     plt.show()
-    print(0)
+    print(f'{foo[0]:.2e}')
