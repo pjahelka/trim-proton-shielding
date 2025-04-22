@@ -12,3 +12,12 @@ The default energy unit is MeV, but TRIM uses both keV and eV, so there are unit
 Use calc_transmitted_spectrum for calculating the trasmitted proton spectrum. This can take a while. You can save the calculated scattering matrix and analysis functions will assume it's been saved under trim_config.SCATTERING_MATRIX_FILE.
 
 The code includes a SRIM application folder that includes a shortcut to TRIM that will run it minimized which will dramatically enhance simulation speed.
+
+Based on convergence testing, some sane defaults for trim_config.py are:
+THETA_NUM = 10
+PROTONS_SIMULATE = 1E2
+PROTONS_TEST_TRANSMIT = 1E1
+PROTONS_TEST_BLOCK = 1E1
+SPECTRUM_ENERGIES_PER_DECADE = 20
+
+On an 8840HS CPU, a simulation takes about five minutes, limited by TRIM calling the Windows display server.
