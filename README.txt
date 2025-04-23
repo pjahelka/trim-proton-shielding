@@ -14,7 +14,7 @@ Use calc_transmitted_spectrum for calculating the trasmitted proton spectrum. Th
 The code includes a SRIM application folder that includes a shortcut to TRIM that will run it minimized which will dramatically enhance simulation speed.
 
 Based on convergence testing, some sane defaults for trim_config.py are:
-THETA_NUM = 10
+THETA_NUM = 15
 PROTONS_SIMULATE = 1E2
 PROTONS_TEST_TRANSMIT = 1E1
 PROTONS_TEST_BLOCK = 1E1
