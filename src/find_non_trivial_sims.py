@@ -1,7 +1,7 @@
 """
 Find the proton angles and energies that are worth simulating in detail
 """
-import trim_config
+import config
 import trim_helper
 import numpy as np
 

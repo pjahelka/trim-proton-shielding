@@ -13,7 +13,7 @@ with different values so the logic below is horrible
 
 import os
 import numpy as np
-import trim_config
+import config
 import re
 import pandas as pd
 

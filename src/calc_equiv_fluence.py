@@ -3,7 +3,7 @@ Module that calculates the equivalent fluences using RDCs
 """
 import numpy as np
 import pandas as pd
-import trim_config
+import config
 import scipy.optimize
 import trim_helper
 

@@ -3,7 +3,7 @@
 import os
 import numpy as np
 import pandas as pd
-import trim_config
+import config
 import collections
 import subprocess
 

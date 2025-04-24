@@ -1,7 +1,7 @@
 """
 Calculate the proton spectrum transmitted through a shield
 """
-import trim_config
+import config
 import numpy as np
 import find_non_trivial_sims
 import trim_helper

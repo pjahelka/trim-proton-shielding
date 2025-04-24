@@ -1,6 +1,6 @@
 import calc_equiv_fluence
 import calc_transmitted_spectrum
-import trim_config
+import config
 import trim_helper
 import numpy as np
 import matplotlib.pyplot as plt
