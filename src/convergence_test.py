@@ -1,24 +1,21 @@
-import calc_equiv_fluence
-import calc_transmitted_spectrum
 import config
-import trim_helper
 import numpy as np
+import calc_transmitted_spectrum
+import calc_equiv_fluence
 import matplotlib.pyplot as plt
-import import_spectra
-
-rdc = calc_equiv_fluence.load_proton_rdc(trim_config.PROTON_RDC_FILE)
 
 def angles_convergence():
     """figure out how many angles of incidence we need"""
-    num_angles = range(10, 20)
+    num_angles = range(5, 20, 3)
     fluences = []
     tested_angle_nums = []
+    rdc = calc_equiv_fluence.load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
     for num_angle in num_angles:
-        trim_config.ANGLES = np.linspace(0, 90, num_angle)
-        trim_helper.ANGLE_WEIGHT = trim_helper.calc_angle_weights()
+        config.SETTINGS['THETA_NUM'] = num_angle
+        config.init_grids()
         calc_transmitted_spectrum.calc_scattering_matrix()
         spectrum = calc_transmitted_spectrum.calc_transmitted_spectrum()
-        fluence = calc_equiv_fluence.calc_fluence(spectrum, rdc, trim_config.POWER_PROTONS_TO_ELECTRONS)
+        fluence = calc_equiv_fluence.calc_fluence(spectrum, rdc, config.SETTINGS['PROTONS_TO_ELECTRONS'])
         fluences.append(fluence)
         tested_angle_nums.append(num_angle)
         plt.plot(tested_angle_nums, fluences)
@@ -29,17 +26,18 @@ def angles_convergence():
 
 def spectrum_energies_per_decade_convergence():
     """Test energies per decade of incident spectrum"""
-    energies_per_decades = [100, 200, 50]
+    energies_per_decades = [25, 50, 75, 100, 125, 150, 175, 200]
     fluences = []
     tested_numbers = []
+    rdc = calc_equiv_fluence.load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
     for energies_per_decade in energies_per_decades:
         #set the variable
-        trim_config.SPECTRUM_ENERGIES_PER_DECADE = energies_per_decade
+        config.SETTINGS['SPECTRUM_ENERGIES_PER_DECADE'] = energies_per_decade
         #recalc spectrum
-        trim_helper.SIMULATED_SPECTRUM = trim_helper.calc_simulated_spectrum()
+        config.init_grids()
         calc_transmitted_spectrum.calc_scattering_matrix()
         spectrum = calc_transmitted_spectrum.calc_transmitted_spectrum()
-        fluence = calc_equiv_fluence.calc_fluence(spectrum, rdc, trim_config.POWER_PROTONS_TO_ELECTRONS)
+        fluence = calc_equiv_fluence.calc_fluence(spectrum, rdc,  config.SETTINGS['PROTONS_TO_ELECTRONS'])
         fluences.append(fluence)
         tested_numbers.append(energies_per_decade)
         plt.plot(tested_numbers, fluences)
@@ -51,6 +49,12 @@ def spectrum_energies_per_decade_convergence():
 
 
 if __name__ == '__main__':
-    #num_angles, fluences = angles_convergence()
-    foo = spectrum_energies_per_decade_convergence()
-    print(foo)
+    from pathlib import Path
+    root = Path.cwd().parent
+    example_config = root / 'example_config.ini'
+    config.read_config(example_config)
+    config.init_grids()
+
+    num_angles, angle_fluences = angles_convergence()
+    num_per_dec, num_per_dec_fluences = spectrum_energies_per_decade_convergence()
+    print(0)

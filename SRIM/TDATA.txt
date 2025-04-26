@@ -3,17 +3,17 @@
 =======================================
       Data  of  TRIM  Calculation      
 =======================================
-====== TRIM Calc.=  H(48.1 MeV) ==> SiO2 - quartz (ICRU-245)(  10 um) ========
+====== TRIM Calc.=  H(23.8 MeV) ==> SiO2 - quartz (ICRU-245)(  25 um) ========
 ------------------------------------------------------------------------------
 --------------------------------------------------------------------
     Recoil/Damage Calculations made with Kinchin-Pease Estimates    
 --------------------------------------------------------------------
 Ion =  H ( 1)   Ion Mass= 001.0080
-Energy  = 4818141.E-02 keV
-Ion Angle to Surface = 86.9 degrees
+Energy  = 2385348.E-02 keV
+Ion Angle to Surface = 84.375 degrees
 ============= TARGET MATERIAL ======================================
   Layer # 1 - SiO2 - quartz (ICRU-245)
-  Layer # 1 - Bottom Depth=     1.E+05 A
+  Layer # 1 - Bottom Depth=     3.E+05 A
   Layer # 1- Density = 6.975E22 atoms/cm3 = 2.32 g/cm3
   Layer # 1-  O = 66.6 Atomic Percent = 53.2 Mass Percent
   Layer # 1- Si = 33.3 Atomic Percent = 46.7 Mass Percent
@@ -23,15 +23,15 @@ Target energies for target atom =  O
 Target energies for target atom = Si
     Displacement = 15 eV, Binding = 2 eV, Surface = 4.7 eV
 ====================================================================
-Depth Range of Tabulated Data=  000000.E+00  -  100000.E+00  Angstroms
+Depth Range of Tabulated Data=  000000.E+00  -  250000.E+00  Angstroms
 ====================================================================
-Total Ions calculated =  009999
+Total Ions calculated =  000099
 Average Range         =   00000.E+00 Angstroms
 Average Straggling    =   00000.E+00 Angstroms
-Average Vacancy/Ion   =   10401.E-04
+Average Vacancy/Ion   =   20017.E-04
 ====================================================================
-Total Backscattered Ions=  1 
-Total Transmitted Ions  =  9999 
+Total Backscattered Ions=  0 
+Total Transmitted Ions  =  100 
 ====================================================================
 See files SRIM Outputs\*.txt for tables :
    TDATA.txt    -- Details of the calculation.

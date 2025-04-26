@@ -5,7 +5,9 @@ import numpy as np
 import pandas as pd
 import config
 import scipy.optimize
-import trim_helper
+import numerics
+import calc_transmitted_spectrum
+
 
 def load_proton_rdc(rdc_file):
     """load rdc file and interpolate it onto the damage energy grid
@@ -15,14 +17,14 @@ def load_proton_rdc(rdc_file):
     rdc = pd.read_csv(rdc_file)
     rdc = rdc.to_numpy()
     #get the data for fitting
-    ir_data = rdc[:trim_config.POWER_LAW_FIT_POINTS]
-    uv_data = rdc[-trim_config.POWER_LAW_FIT_POINTS:]
+    ir_data = rdc[:config.SETTINGS['POWER_LAW_FIT_POINTS']]
+    uv_data = rdc[-config.SETTINGS['POWER_LAW_FIT_POINTS']:]
     #do the fit
-    ir_fit, ir_cov = scipy.optimize.curve_fit(power_law, ir_data[:, 0], ir_data[:, 1], sigma = trim_config.CURVE_FIT_SIGMA)
-    uv_fit, ir_cov = scipy.optimize.curve_fit(power_law, uv_data[:, 0], uv_data[:, 1], sigma = trim_config.CURVE_FIT_SIGMA)
+    ir_fit, ir_cov = scipy.optimize.curve_fit(power_law, ir_data[:, 0], ir_data[:, 1], sigma = config.SETTINGS['CURVE_FIT_SIGMA'])
+    uv_fit, ir_cov = scipy.optimize.curve_fit(power_law, uv_data[:, 0], uv_data[:, 1], sigma = config.SETTINGS['CURVE_FIT_SIGMA'])
     #do the interpolation
     new_rdc = []
-    for energy in trim_helper.DAMAGE_ENERGIES:
+    for energy in config.DAMAGE_ENERGIES:
         #IR_case
         if energy < min(rdc[:,0]):
             new_rdc.append(power_law(energy, *ir_fit))
@@ -49,23 +51,20 @@ def calc_fluence(slowed_spectrum, rdc, factor):
     return ret
 
 if __name__ == "__main__":
-    # foo = load_proton_rdc(trim_config.PROTON_RDC_FILE)
+    from pathlib import Path
+    root = Path.cwd().parent
+    example_config = root / 'example_config.ini'
+    config.read_config(example_config)
+    config.init_grids()
+
+    rdc = load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
     import matplotlib.pyplot as plt
-    # plt.plot(trim_helper.DAMAGE_ENERGIES, foo)
-    # raw_rdc = pd.read_csv(trim_config.PROTON_RDC_FILE).to_numpy()
-    # plt.plot(raw_rdc[:,0], raw_rdc[:,1])
-    # plt.yscale('log')
-    # plt.xscale('log')
-    # plt.show()
-    import calc_transmitted_spectrum
-    calc_transmitted_spectrum.calc_scattering_matrix()
-    spectrum = calc_transmitted_spectrum.calc_transmitted_spectrum()
-    plt.plot(trim_helper.DAMAGE_ENERGIES, trim_helper.calc_IFlux(spectrum))
+    plt.plot(config.DAMAGE_ENERGIES, rdc)
+    raw_rdc = pd.read_csv(config.SETTINGS['PROTON_RDC_FILE']).to_numpy()
+    plt.plot(raw_rdc[:,0], raw_rdc[:,1])
+    plt.yscale('log')
     plt.xscale('log')
-    #plt.yscale('log')
     plt.show()
-
-
-    rdc = load_proton_rdc(trim_config.PROTON_RDC_FILE)
-    foo = calc_fluence(spectrum, rdc, trim_config.POWER_PROTONS_TO_ELECTRONS)
+    spectrum = calc_transmitted_spectrum.calc_transmitted_spectrum()
+    foo = calc_fluence(spectrum, rdc, config.SETTINGS['PROTONS_TO_ELECTRONS'])
     print(f'{foo:.2e}')
