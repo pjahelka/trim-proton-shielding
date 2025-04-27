@@ -1,6 +1,6 @@
 ==> SRIM-2013.00 This file controls TRIM Calculations.
 Ion: Z1 ,  M1,  Energy (keV), Angle,Number,Bragg Corr,AutoSave Number.
-     1   1.008      23853.480791626003       84.375    100        1     1E6
+     1   1.008      8780.648910039303       83.57142857142857    100        1     1E6
 Cascades(1=No;2=Full;3=Sputt;4-5=Ions;6-7=Neutrons), Random Number Seed, Reminders
                       1                                   0       0
 Diskfiles (0=no,1=yes): Ranges, Backscatt, Transmit, Sputtered, Collisions(1=Ion;2=Ion+Recoils), Special EXYZ.txt file

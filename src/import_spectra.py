@@ -16,6 +16,7 @@ import numpy as np
 import config
 import re
 import pandas as pd
+import numerics
 
 def extract_data(file):
     """Parse a SPENVIS proton spectrum file"""
@@ -65,14 +66,14 @@ def combine_spectra(spectra_table):
     resampled_spectra = []
     #resample the proton spectra using logarithmic interpolation
     for spectra in spectra_table:
-        resampled_spectrum = log_interp(new_energies, spectra[:, 0], spectra[:, 1])
+        resampled_spectrum = numerics.log_interp(new_energies, spectra[:, 0], spectra[:, 1])
         resampled_spectra.append(resampled_spectrum)
     #sum and return
     resampled_spectrum = np.sum(resampled_spectra, axis = 0)
     return new_energies, resampled_spectrum
 
 def save_combined_spectrum():
-    """Calculate and save the combined spectrum"""
+    """Calculate and save the combined spectrum. It's an IFlux"""
     spectra = []
     for spectra_path in config.SETTINGS['SPECTRA_FILES']:
         spectra.append(extract_data(spectra_path))

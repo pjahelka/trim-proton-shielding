@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 def angles_convergence():
     """figure out how many angles of incidence we need"""
-    num_angles = range(5, 20, 3)
+    num_angles = [15]
     fluences = []
     tested_angle_nums = []
     rdc = calc_equiv_fluence.load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
@@ -26,7 +26,7 @@ def angles_convergence():
 
 def spectrum_energies_per_decade_convergence():
     """Test energies per decade of incident spectrum"""
-    energies_per_decades = [25, 50, 75, 100, 125, 150, 175, 200]
+    energies_per_decades = np.logspace(1, 7, num = 7, base = 2)
     fluences = []
     tested_numbers = []
     rdc = calc_equiv_fluence.load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
@@ -46,6 +46,27 @@ def spectrum_energies_per_decade_convergence():
         print(f'{fluence:.2e}')
     return energies_per_decades, fluences
 
+def find_divergence():
+    energies_per_decades = [25, 100]
+    #look at incident spectra
+    for energies_per_decade in energies_per_decades:
+        config.SETTINGS['SPECTRUM_ENERGIES_PER_DECADE'] = energies_per_decade
+        config.init_grids()
+        plt.plot(config.SIMULATED_SPECTRUM[:,0],config.SIMULATED_SPECTRUM[:,1])
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.show()
+    #look at transmitted spectra
+    for energies_per_decade in energies_per_decades:
+        config.SETTINGS['SPECTRUM_ENERGIES_PER_DECADE'] = energies_per_decade
+        config.init_grids()
+        calc_transmitted_spectrum.calc_scattering_matrix()
+        spectrum = calc_transmitted_spectrum.calc_transmitted_spectrum()
+        plt.plot(config.DAMAGE_ENERGIES, spectrum)
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.show()
+    return 0
 
 
 if __name__ == '__main__':
@@ -56,5 +77,6 @@ if __name__ == '__main__':
     config.init_grids()
 
     num_angles, angle_fluences = angles_convergence()
-    num_per_dec, num_per_dec_fluences = spectrum_energies_per_decade_convergence()
+    #num_per_dec, num_per_dec_fluences = spectrum_energies_per_decade_convergence()
+    #find_divergence()
     print(0)

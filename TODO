@@ -1,1 +1,0 @@
-Make plots of IFlux and IFlux * RDC vs number of spectrum samples per decade to try and figure out why damage is diverging with spectral resolution.

@@ -8,6 +8,7 @@ import config
 import calc_transmitted_spectrum
 import calc_equiv_fluence
 
+
 #read config and intialize the energy grids and spectra
 config.read_config('example_config.ini')
 config.init_grids()

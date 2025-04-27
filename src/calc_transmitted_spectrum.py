@@ -37,6 +37,8 @@ def calc_scattering_matrix():
             single_angle_scattering.append(scattering_matrix)
         scattering_data.append(single_angle_scattering)
     scattering_data = np.array(scattering_data)
+    #tack on the 90deg data as zeros to make integrals easier later
+    scattering_data = np.pad(scattering_data, ((0, 1),(0,0),(0,0)), mode='constant', constant_values=0)
     np.save(config.SETTINGS['SCATTERING_FILE_PATH'], scattering_data, allow_pickle=False)
     return scattering_data
 
@@ -54,12 +56,21 @@ def construct_trivial_scattering_matrix(bound_type, energy_idx):
 
 def calc_transmitted_spectrum():
     """Calculate the transmitted spectrum"""
+    #load matrix
     scattering_matrix = np.load(config.SETTINGS['SCATTERING_FILE_PATH'])
-    #scattering_matrix has shape (angles,incident_energies, damage_energies)
-    THIS MAY HAVE A BUG incident_angle_weighted = np.expand_dims(config.ANGLE_WEIGHTS,1) * np.tile(config.SIMULATED_SPECTRUM[:,1],(len(config.ANGLE_WEIGHTS),1))
-    #incident_angle_weighted has shape (angles, incident energies)
-    #einstein summation for integrating over incident energies and angles
-    transmitted = np.einsum('ijk,ij',scattering_matrix,incident_angle_weighted)
+    #transpose spectrum to get it in the right shape for broadcasting the angle factors
+    scattering_matrix = scattering_matrix.transpose([1,2,0])
+    #calculate angle factors
+    angle_factors = 0.5 * np.sin(config.ANGLES * np.pi / 180) * np.cos(config.ANGLES * np.pi / 180)
+    #broadcast the angle factors and scattering matrix together
+    scattering_matrix_angles = scattering_matrix * angle_factors
+    #radian angles
+    angles_rad = config.ANGLES * np.pi / 180
+    #integrate over the angles of incidence
+    scattering_matrix_angle_reduced = np.trapezoid(scattering_matrix_angles, angles_rad)
+    #product sum with the incident spectrum to get the transmitted one
+    simulated_DFlux = numerics.calc_DFlux(config.SIMULATED_SPECTRUM[:,1])
+    transmitted = np.einsum('ij,i', scattering_matrix_angle_reduced, simulated_DFlux)
     return transmitted
 
 def visualize_scattering_matrix():
@@ -68,17 +79,25 @@ def visualize_scattering_matrix():
     contour plot with incident energies and trasmitted energies as the axes
     which uses angle weights correctly.
     """
-    #load scattering matrix
+    # load matrix
     scattering_matrix = np.load(config.SETTINGS['SCATTERING_FILE_PATH'])
-    #sum over weighted angles of incidence
-    angle_weighted_matrix = np.einsum('ijk,i',scattering_matrix, config.ANGLE_WEIGHTS)
+    # transpose spectrum to get it in the right shape for broadcasting the angle factors
+    scattering_matrix = scattering_matrix.transpose([1, 2, 0])
+    # calculate angle factors
+    angle_factors = 0.5 * np.sin(config.ANGLES * np.pi / 180) * np.cos(config.ANGLES * np.pi / 180)
+    # broadcast the angle factors and scattering matrix together
+    scattering_matrix_angles = scattering_matrix * angle_factors
+    # radian angles
+    angles_rad = config.ANGLES * np.pi / 180
+    # integrate over the angles of incidence
+    scattering_matrix_angle_reduced = np.trapezoid(scattering_matrix_angles, angles_rad)
     #Normalize the max of each transmitted energy to 1 so we can see where the transmitted protons are coming from
-    normalized_matrix = np.zeros(angle_weighted_matrix.shape)
+    normalized_matrix = np.zeros_like(scattering_matrix_angle_reduced)
     for damage_energy_idx in range(len(config.DAMAGE_ENERGIES)):
-        row_max = max(angle_weighted_matrix[:,damage_energy_idx])
+        row_max = max(scattering_matrix_angle_reduced[:,damage_energy_idx])
         if np.isclose(row_max, 0):
             continue
-        normalized = angle_weighted_matrix[:,damage_energy_idx]/row_max
+        normalized = scattering_matrix_angle_reduced[:,damage_energy_idx]/row_max
         normalized_matrix[:,damage_energy_idx] = normalized
 
 
@@ -103,11 +122,8 @@ if __name__ == "__main__":
     example_config = root / 'example_config.ini'
     config.read_config(example_config)
     config.init_grids()
-
+    calc_transmitted_spectrum()
     #calc_scattering_matrix()
-    scattering_matrix = np.load(config.SETTINGS['SCATTERING_FILE_PATH'])
-    print(config.SIMULATED_SPECTRUM.shape)
-    print(scattering_matrix.shape)
     visualize_scattering_matrix()
     foo = numerics.calc_IFlux(calc_transmitted_spectrum())
     import matplotlib.pyplot as plt

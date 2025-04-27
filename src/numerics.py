@@ -53,8 +53,17 @@ def bisect_search(x, f, error_tolerance):
     #return the left-hand side of the suspected zero
     return left_idx, left, f_left
 
-def calc_IFlux(fluxes):
+def calc_IFlux(DFlux):
     """Turn protons at specific energies into an IFlux for nice plotting"""
-    reverse_flux = np.flip(fluxes) #because SPENVIS calcs IFlux from high to low energy
+    reverse_flux = np.flip(DFlux) #because SPENVIS calcs IFlux from high to low energy
     cumsum = np.cumsum(reverse_flux)
     return np.flip(cumsum)
+
+def calc_DFlux(IFlux):
+    """Turn an IFlux into a DFlux using the implcit energy grid"""
+    DFlux = IFlux - np.roll(IFlux, -1)
+    DFlux[-1] = IFlux[-1]
+    return DFlux
+
+if __name__ == "__main__":
+    print(calc_DFlux([6,4,3,1,-1]))

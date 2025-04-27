@@ -85,7 +85,7 @@ def calc_angle_weights():
     return np.array(angle_weights)
 
 def load_spectrum():
-    """Load the incident proton spectrum and resample it onto the TRIM grid"""
+    """Load the incident proton spectrum and resample it onto the TRIM grid. It's an IFlux"""
     spectrum = pd.read_csv(SETTINGS['PROTON_SPECTRUM_FILE']).to_numpy()[:,[1,2]]
     min_energy = min(spectrum[:,0])
     max_energy = max(spectrum[:,0])

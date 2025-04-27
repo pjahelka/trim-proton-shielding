@@ -15,14 +15,14 @@
   The Radial Range is the mean radial displacement range from the       
   X-axis a-uming cylindrical symmetry.                                 
 ========================================================================
-====== TRIM Calc.=  H(23.8 MeV) ==> SiO2 - quartz (ICRU-245)(  25 um) ========
+====== TRIM Calc.=  H(8.78 MeV) ==> SiO2 - quartz (ICRU-245)(  25 um) ========
 ------------------------------------------------------------------------------
 --------------------------------------------------------------------
     Recoil/Damage Calculations made with Kinchin-Pease Estimates    
 --------------------------------------------------------------------
  See file: SRIM Outputs\TDATA.txt for data about the calculation
- Ion    =  H   Energy = 23853.480791626003 keV
- Total Ions calculated =99.05
+ Ion    =  H   Energy = 8780.648910039303 keV
+ Total Ions calculated =99.29
 ============= TARGET MATERIAL ======================================
 Layer  1 : SiO2 - quartz (ICRU-245)
 Layer Width = 25000.E+01 AAA ;
@@ -30,9 +30,9 @@ Layer Width = 25000.E+01 AAA ;
   Layer # 1-  O = 66.6 Atomic Percent = 53.2 Mass Percent
   Layer # 1- Si = 33.3 Atomic Percent = 46.7 Mass Percent
 ====================================================================
- Ion Average Range = 000000.E+00 A   Straggling = 000000.E+00 A
- Ion Lateral Range = 000000.E+00 A   Straggling = 000000.E+00 A
- Ion Radial  Range = 000000.E+00 A   Straggling = 000000.E+00 A
+ Ion Average Range = 243407.E+00 A   Straggling = 000000.E+00 A
+ Ion Lateral Range = 523034.E+01 A   Straggling = 000000.E+00 A
+ Ion Radial  Range = 523423.E+01 A   Straggling = 000000.E+00 A
 ====================================================================
                 LATERAL     Projected      LATERAL        Radial    
   TARGET       PROJ.RANGE   Straggling      RADIAL      Straggling  
@@ -135,6 +135,6 @@ Layer Width = 25000.E+01 AAA ;
 2375000.E-01 00000000.E+00 00000000.E+00 00000000.E+00 00000000.E+00 
 2400000.E-01 00000000.E+00 00000000.E+00 00000000.E+00 00000000.E+00 
 2425000.E-01 00000000.E+00 00000000.E+00 00000000.E+00 00000000.E+00 
-2450000.E-01 00000000.E+00 00000000.E+00 00000000.E+00 00000000.E+00 
+2450000.E-01 52303405.E-01 52303405.E-01 52342259.E-01 00000000.E+00 
 2475000.E-01 00000000.E+00 00000000.E+00 00000000.E+00 00000000.E+00 
 2500000.E-01 00000000.E+00 00000000.E+00 00000000.E+00 00000000.E+00 

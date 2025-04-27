@@ -4,7 +4,7 @@
       ION and final RECOIL ATOM Distributions     
  See  SRIM Outputs\TDATA.txt for calculation details
 ==================================================
-====== TRIM Calc.=  H(23.8 MeV) ==> SiO2 - quartz (ICRU-245)(  25 um) ========
+====== TRIM Calc.=  H(8.78 MeV) ==> SiO2 - quartz (ICRU-245)(  25 um) ========
 ------------------------------------------------------------------------------
 --------------------------------------------------------------------
     Recoil/Damage Calculations made with Kinchin-Pease Estimates    
@@ -13,17 +13,17 @@
   There are NO RECOILS unless a full TRIM calculation is made.   
 ----------------------------------------------------------------
 See file :  SRIM Outputs\TDATA.txt   for details of calculation
- Ion    =  H   Energy = 23853.480791626003  keV
+ Ion    =  H   Energy = 8780.648910039303  keV
 ============= TARGET MATERIAL ======================================
 Layer  1 : SiO2 - quartz (ICRU-245)
 Layer Width =     3.E+05 A   Layer # 1- Density = 6.975E22 atoms/cm3 = 2.32 g/cm3
   Layer # 1-  O = 66.6 Atomic Percent = 53.2 Mass Percent
   Layer # 1- Si = 33.3 Atomic Percent = 46.7 Mass Percent
 ====================================================================
- Total Ions calculated =99.05
- Ion Average Range =   000.0E+00 A   Straggling =   000.0E+00 A
- Ion Lateral Range =   000.0E+00 A   Straggling =   000.0E+00 A
- Ion Radial  Range =   000.0E+00 A   Straggling =   000.0E+00 A
+ Total Ions calculated =99.29
+ Ion Average Range =   243.4E+03 A   Straggling =   000.0E+00 A
+ Ion Lateral Range =   523.0E+04 A   Straggling =   000.0E+00 A
+ Ion Radial  Range =   523.4E+04 A   Straggling =   000.0E+00 A
 =================================================================
   Table Distribution Units are >>>  (Atoms/cm3) / (Atoms/cm2)  <<<  
 =================================================================
@@ -127,6 +127,6 @@ Layer Width =     3.E+05 A   Layer # 1- Density = 6.975E22 atoms/cm3 = 2.32 g/cm
 237500.E+00  0.0000E+00  0.0000E+00
 240000.E+00  0.0000E+00  0.0000E+00
 242500.E+00  0.0000E+00  0.0000E+00
-245000.E+00  0.0000E+00  0.0000E+00
+245000.E+00  4.0285E+02  0.0000E+00
 247500.E+00  0.0000E+00  0.0000E+00
 250000.E+00  0.0000E+00  0.0000E+00
