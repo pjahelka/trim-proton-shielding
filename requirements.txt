@@ -1,4 +1,5 @@
-pandas
 numpy
-matplotlib
 scipy
+matplotlib
+pandas
+configparser
