@@ -22,7 +22,7 @@ def config_trim(energy, thickness, angle, particle_number):
         lines[2] = f'     1   1.008      {energy * 1E3}       {angle}    {particle_number}        1     1E6\n' #multiply by 1000 for MeV -> keV
         lines[6] = '0 0 1 0 0 0\n'  #save new transmission file
         lines[10] = f'5 0 {thickness*10*1000}\n' #thickness is in angstroms
-        lines[16] = f'1 "SiO2 - quartz (ICRU-245)" {thickness*10*1000} 2.32 .666667 .333333\n' #set thickness of glass
+        lines[16] = f'1 "Polyethylene" {thickness*10*1000} .93 .666667 .333333\n' #set thickness of glass
     with open(config.SETTINGS['TRIM_PATHS']['TRIM_IN'], 'w') as file:
         file.writelines(lines)
 

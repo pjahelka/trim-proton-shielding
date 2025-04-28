@@ -56,16 +56,16 @@ def construct_trivial_scattering_matrix(bound_type, energy_idx):
 
 def calc_transmitted_spectrum():
     """Calculate the transmitted spectrum"""
-    #load matrix
+    #load scattering matrix
     scattering_matrix = np.load(config.SETTINGS['SCATTERING_FILE_PATH'])
     #transpose spectrum to get it in the right shape for broadcasting the angle factors
     scattering_matrix = scattering_matrix.transpose([1,2,0])
+    # radian angles
+    angles_rad = config.ANGLES * np.pi / 180
     #calculate angle factors
-    angle_factors = 0.5 * np.sin(config.ANGLES * np.pi / 180) * np.cos(config.ANGLES * np.pi / 180)
+    angle_factors = 0.5 * np.sin(angles_rad) * np.cos(angles_rad)
     #broadcast the angle factors and scattering matrix together
     scattering_matrix_angles = scattering_matrix * angle_factors
-    #radian angles
-    angles_rad = config.ANGLES * np.pi / 180
     #integrate over the angles of incidence
     scattering_matrix_angle_reduced = np.trapezoid(scattering_matrix_angles, angles_rad)
     #product sum with the incident spectrum to get the transmitted one

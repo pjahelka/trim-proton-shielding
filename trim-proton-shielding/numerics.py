@@ -60,10 +60,15 @@ def calc_IFlux(DFlux):
     return np.flip(cumsum)
 
 def calc_DFlux(IFlux):
-    """Turn an IFlux into a DFlux using the implcit energy grid"""
+    """Turn an IFlux into a DFlux using the implcit energy grid
+
+    Not really a DFlux because not energy normalized. Think of protons at specific energies."""
     DFlux = IFlux - np.roll(IFlux, -1)
     DFlux[-1] = IFlux[-1]
     return DFlux
+
+def power_law(x, a, b):
+    return a * x**b
 
 if __name__ == "__main__":
     print(calc_DFlux([6,4,3,1,-1]))

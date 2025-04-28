@@ -46,28 +46,60 @@ def spectrum_energies_per_decade_convergence():
         print(f'{fluence:.2e}')
     return energies_per_decades, fluences
 
-def find_divergence():
-    energies_per_decades = [25, 100]
-    #look at incident spectra
-    for energies_per_decade in energies_per_decades:
-        config.SETTINGS['SPECTRUM_ENERGIES_PER_DECADE'] = energies_per_decade
-        config.init_grids()
-        plt.plot(config.SIMULATED_SPECTRUM[:,0],config.SIMULATED_SPECTRUM[:,1])
-    plt.xscale('log')
-    plt.yscale('log')
-    plt.show()
-    #look at transmitted spectra
-    for energies_per_decade in energies_per_decades:
-        config.SETTINGS['SPECTRUM_ENERGIES_PER_DECADE'] = energies_per_decade
-        config.init_grids()
+def protons_simulate_convergence():
+    protons = np.logspace(1, 4, num = 4)
+    fluences = []
+    tested_numbers = []
+    rdc = calc_equiv_fluence.load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
+    for proton in protons:
+        config.SETTINGS['PROTONS_SIMULATE'] = proton
         calc_transmitted_spectrum.calc_scattering_matrix()
         spectrum = calc_transmitted_spectrum.calc_transmitted_spectrum()
-        plt.plot(config.DAMAGE_ENERGIES, spectrum)
-    plt.xscale('log')
-    plt.yscale('log')
-    plt.show()
-    return 0
+        fluence = calc_equiv_fluence.calc_fluence(spectrum, rdc,  config.SETTINGS['PROTONS_TO_ELECTRONS'])
+        fluences.append(fluence)
+        tested_numbers.append(proton)
+        plt.plot(tested_numbers, fluences)
+        plt.show()
+        print(proton)
+        print(f'{fluence:.2e}')
+    return protons, fluences
 
+def protons_block_convergence():
+    protons = np.logspace(0, 2, num = 3)
+    fluences = []
+    tested_numbers = []
+    rdc = calc_equiv_fluence.load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
+    for proton in protons:
+        config.SETTINGS['PROTONS_TEST_TRANSMIT'] = proton
+        config.SETTINGS['PROTONS_TEST_BLOCK'] = proton
+        calc_transmitted_spectrum.calc_scattering_matrix()
+        spectrum = calc_transmitted_spectrum.calc_transmitted_spectrum()
+        fluence = calc_equiv_fluence.calc_fluence(spectrum, rdc,  config.SETTINGS['PROTONS_TO_ELECTRONS'])
+        fluences.append(fluence)
+        tested_numbers.append(proton)
+        plt.plot(tested_numbers, fluences)
+        plt.show()
+        print(proton)
+        print(f'{fluence:.2e}')
+    return protons, fluences
+
+def thickness_sweep():
+    thicknesses = np.linspace(5, 100, num = 20)
+    fluences = []
+    tested_numbers = []
+    rdc = calc_equiv_fluence.load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
+    for thickness in thicknesses:
+        config.SETTINGS['SHIELD_THICKNESS'] = thickness
+        calc_transmitted_spectrum.calc_scattering_matrix()
+        spectrum = calc_transmitted_spectrum.calc_transmitted_spectrum()
+        fluence = calc_equiv_fluence.calc_fluence(spectrum, rdc, config.SETTINGS['PROTONS_TO_ELECTRONS'])
+        fluences.append(fluence)
+        tested_numbers.append(thickness)
+        plt.plot(tested_numbers, fluences)
+        plt.show()
+        print(thickness)
+        print(f'{fluence:.2e}')
+    return thicknesses, fluences
 
 if __name__ == '__main__':
     from pathlib import Path
@@ -75,8 +107,9 @@ if __name__ == '__main__':
     example_config = root / 'example_config.ini'
     config.read_config(example_config)
     config.init_grids()
-
-    num_angles, angle_fluences = angles_convergence()
+    #protons_simulate_convergence()
+    #protons_block_convergence()
+    #num_angles, angle_fluences = angles_convergence()
     #num_per_dec, num_per_dec_fluences = spectrum_energies_per_decade_convergence()
-    #find_divergence()
+    x, y = thickness_sweep()
     print(0)

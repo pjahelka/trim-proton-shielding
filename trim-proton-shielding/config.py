@@ -10,7 +10,6 @@ SETTINGS = {}
 ANGLES = []
 SIMULATED_SPECTRUM = []
 DAMAGE_ENERGIES = []
-ANGLE_WEIGHTS = []
 
 def read_config(config_file):
     """read a config file into the settings dictionary"""
@@ -59,8 +58,6 @@ def init_grids():
     #angles
     global ANGLES
     ANGLES = np.linspace(SETTINGS['THETA_MIN'], SETTINGS['THETA_MAX'], SETTINGS['THETA_NUM'], endpoint = True)
-    global ANGLE_WEIGHTS
-    ANGLE_WEIGHTS = calc_angle_weights()
     #incident spectrum
     global SIMULATED_SPECTRUM
     SIMULATED_SPECTRUM = load_spectrum()
@@ -73,16 +70,6 @@ def init_grids():
     DAMAGE_ENERGIES = np.logspace(np.log10(damage_min_energy), np.log10(damage_max_energy), damage_num_samp)
     return 0
 
-def calc_angle_weights():
-    """calculate what fraction of the protons should be shot in at each angle"""
-    angle_weights = []
-    num_angle = len(ANGLES)
-    for idx in range(num_angle - 1): #exclude 90deg
-        weight = 0.25*(np.cos(ANGLES[idx] * np.pi / 180) ** 2 - np.cos(ANGLES[idx + 1] * np.pi / 180) ** 2)
-        """Follows Anspaugh GaAs Solar Cell Radiation Handbook
-        There's an extra factor of 0.5 because we assume perfect back shielding"""
-        angle_weights.append(weight)
-    return np.array(angle_weights)
 
 def load_spectrum():
     """Load the incident proton spectrum and resample it onto the TRIM grid. It's an IFlux"""

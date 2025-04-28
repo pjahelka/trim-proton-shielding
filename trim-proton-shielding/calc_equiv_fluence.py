@@ -20,24 +20,23 @@ def load_proton_rdc(rdc_file):
     ir_data = rdc[:config.SETTINGS['POWER_LAW_FIT_POINTS']]
     uv_data = rdc[-config.SETTINGS['POWER_LAW_FIT_POINTS']:]
     #do the fit
-    ir_fit, ir_cov = scipy.optimize.curve_fit(power_law, ir_data[:, 0], ir_data[:, 1], sigma = config.SETTINGS['CURVE_FIT_SIGMA'])
-    uv_fit, ir_cov = scipy.optimize.curve_fit(power_law, uv_data[:, 0], uv_data[:, 1], sigma = config.SETTINGS['CURVE_FIT_SIGMA'])
+    ir_fit, ir_cov = scipy.optimize.curve_fit(numerics.power_law, ir_data[:, 0], ir_data[:, 1], sigma = config.SETTINGS['CURVE_FIT_SIGMA'])
+    uv_fit, ir_cov = scipy.optimize.curve_fit(numerics.power_law, uv_data[:, 0], uv_data[:, 1], sigma = config.SETTINGS['CURVE_FIT_SIGMA'])
     #do the interpolation
     new_rdc = []
     for energy in config.DAMAGE_ENERGIES:
         #IR_case
         if energy < min(rdc[:,0]):
-            new_rdc.append(power_law(energy, *ir_fit))
+            new_rdc.append(numerics.power_law(energy, *ir_fit))
         #interpolate case
         if (energy >= min(rdc[:,0])) and (energy <= max(rdc[:,0])):
             new_rdc.append(np.interp(energy, rdc[:,0], rdc[:,1]))
         #UV case
         if energy > max(rdc[:,0]):
-            new_rdc.append(power_law(energy, *uv_fit))
+            new_rdc.append(numerics.power_law(energy, *uv_fit))
     return new_rdc
 
-def power_law(x, a, b):
-    return a * x**b
+
 
 def calc_fluence(slowed_spectrum, rdc, factor):
     """Calculate the equivalent fluence for 10MeV protons if factor = 1.
