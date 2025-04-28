@@ -102,14 +102,15 @@ def visualize_scattering_matrix():
 
 
     import matplotlib.pyplot as plt
-    plt.contourf(config.DAMAGE_ENERGIES, config.SIMULATED_SPECTRUM[:,0], normalized_matrix, np.linspace(0,1,100))
+    #plt.contourf(config.DAMAGE_ENERGIES, config.SIMULATED_SPECTRUM[:,0], normalized_matrix, np.linspace(0,1,100))
+    plt.pcolor(config.DAMAGE_ENERGIES, config.SIMULATED_SPECTRUM[:,0], normalized_matrix, shading = 'auto' )
     plt.xscale('log')
-    plt.yscale('linear')
+    plt.yscale('log')
     plt.xlim(1E-3, 10)
     plt.ylim(6E-1, 10)
     plt.xlabel('Trasmitted Energy, MeV')
     plt.ylabel('Incident Energy, MeV')
-    plt.title('Angle-Integrated Scattering Matrix')
+    plt.title('Transmission-Normalized Scattering Matrix')
     plt.colorbar(ticks = np.linspace(0,1,11))
     plt.savefig('pretty_scattering_matrix.png')
     plt.show()
@@ -122,8 +123,8 @@ if __name__ == "__main__":
     example_config = root / 'example_config.ini'
     config.read_config(example_config)
     config.init_grids()
+    calc_scattering_matrix()
     calc_transmitted_spectrum()
-    #calc_scattering_matrix()
     visualize_scattering_matrix()
     foo = numerics.calc_IFlux(calc_transmitted_spectrum())
     import matplotlib.pyplot as plt

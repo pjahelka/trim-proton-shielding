@@ -4,7 +4,7 @@
         Replacement Collisions       
  See SRIM Outputs\TDATA.txt for calc. details   
 =========================================
-====== TRIM Calc.=  H(33.3 MeV) ==> Polyethylene(  100 um) ===================
+====== TRIM Calc.=  H(3.19 MeV) ==> Polyethylene(  5 um) =====================
 ------------------------------------------------------------------------------
 --------------------------------------------------------------------
     Recoil/Damage Calculations made with Kinchin-Pease Estimates    

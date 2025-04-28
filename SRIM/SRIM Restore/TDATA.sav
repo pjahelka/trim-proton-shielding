@@ -5,33 +5,33 @@
 TRIM  Version  Number  /  Calculation Name 
 "SRIM-2013.00"    "H (10) into Layer 1                     "
 ION DATA:At.Numb, Mass(amu), Energy (keV) , Angle to Target
-          1     1.0080  3.3377E+04    83.6
+          1     1.0080  3.1964E+03    64.3
 ION NUMB: Current, Total, AutoSave, Transmitted, Backscattered 
-        100 100  32000    100    0
+        10 10  32000    10    0
 CURRENT ION: Energy(eV),  Depth (X,Y,Z), Trajectory: Cos(X,Y,Z), Sin(X)
-3.17927E+07 1.00000E+06 8.89361E+06 5.81595E+04 0.112937 0.993554 0.009834 0.993602
+3.05786E+06 5.00005E+04 1.03674E+05 7.09150E+01 0.437190 0.899339 0.007375 0.899369
 ION AVGS:  Range,      Straggling,   Vacancies/Ion
-        0.0000E+00   0.0000E+00   3.9107E+00
+        0.0000E+00   0.0000E+00   4.0000E-01
 ION SUMS:  Range,Straggling,(Vacancies,Replacements,Interstitials)/Ang.
-0.00000E+000  0.00000E+000  0.00000E+000  0.00000E+000  3.91067E-002  0.00000E+000  0.00000E+000  0.00000E+000
+0.00000E+000  0.00000E+000  0.00000E+000  0.00000E+000  8.00000E-003  0.00000E+000  0.00000E+000  0.00000E+000
 Ion Y-Z Lateral Data :  Range, Straggling, Kurtosis, Radial Dev.
 0.00000E+000  0.00000E+000  0.00000E+000  0.00000E+000
-0.00000E+000  0.00000E+000  0.00000E+000  0.00000E+000  1.00000E+006
+0.00000E+000  0.00000E+000  0.00000E+000  0.00000E+000  4.99996E+004
 Cascade Type, FileFLAGS: Sputter, Ranges, Backscatter, Transmit, Collisions, Random Seeds(2)
-  1 0 0 0 1 0 1 1879414871 491133426
+  1 0 0 0 1 0 1 563901605 1954787695
 TGT DATA: ------- Numb.Elements, Numb.Layers -----------------
                        2           1
 TGT DATA: Atomic Numb, Mass,  Disp., Binding, Surf. Energy(eV)
  1            1.0080        10.00         3.00          2.00
  6            12.0110       28.00         3.00          7.41
 TGT Layers: Name      Width(A),    Depth(A), Density(g/cm3), Stoichiometry (Tgt.Atoms)
-    "Polyethylene" 1.0000E+06             1.0000E+06    9.3000E-01 6.66667E-01 3.33333E-01
+    "Polyethylene" 5.0000E+04             5.0000E+04    9.3000E-01 6.66667E-01 3.33333E-01
 Lowest E,  Ed(min)  (eV)
  1             10 
 Total Sputtered Atoms and Energy (eV)     (Target Atoms 1 - 2  )
     0.000E+000 0.000E+000    0.000E+000 0.000E+000 
 Plot Display Start Depth (A), End Depth(A), Depth Resolution (Ang.)
- 0             1000000       10000 
+ 0             50000         500 
 Plotting Colors from TRIM.CFG
  16777215      255           6             65535         255           16777215      0             16711680      255           8388608       65280         16776960 
  16777215  4227327  15982183  16744703  16777088  13159423  16760769  8421376  6422724  8388736  4755857  9408399  16777215 
