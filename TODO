@@ -1,1 +1,5 @@
 Benchmark slowed spectra against MULASSIS SPENVIS output
+Instead of lots of simulations, write a single long simulation in TRIM.in
+  Much faster
+Write a simulation class to simplify integration into other code
+Make plots of accumulated damage vs incident energy to figure out when the low-energy protons start to really matter.
