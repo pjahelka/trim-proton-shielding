@@ -1,6 +1,7 @@
 Benchmark slowed spectra against MULASSIS SPENVIS output
 Instead of lots of simulations, write a single long simulation in TRIM.in
-  Much faster
+    WONTFIX TRIM.IN doesn't support multiple lines of input and TRIM.dat requires human intervention to run :(
 Write a simulation class to simplify integration into other code
 Make plots of accumulated damage vs incident energy to figure out when the low-energy protons start to really matter.
 Make option to read CSV the specifies the shield stack
+    WONTFIX need to know displacement energy, lattice energy, and surface energy, which aren't available from Compound.dat
