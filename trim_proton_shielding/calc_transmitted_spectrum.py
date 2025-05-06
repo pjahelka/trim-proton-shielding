@@ -55,7 +55,7 @@ def construct_trivial_scattering_matrix(bound_type, energy_idx):
         return matrix
 
 def calc_transmitted_spectrum():
-    """Calculate the transmitted spectrum"""
+    """Calculate the transmitted omnidirectional spectrum"""
     #load scattering matrix
     scattering_matrix = np.load(config.SETTINGS['SCATTERING_FILE_PATH'])
     #transpose spectrum to get it in the right shape for broadcasting the angle factors
@@ -70,7 +70,7 @@ def calc_transmitted_spectrum():
     scattering_matrix_angle_reduced = np.trapezoid(scattering_matrix_angles, angles_rad)
     #product sum with the incident spectrum to get the transmitted one
     simulated_DFlux = numerics.calc_DFlux(config.SIMULATED_SPECTRUM[:,1])
-    transmitted = np.einsum('ij,i', scattering_matrix_angle_reduced, simulated_DFlux)
+    transmitted = np.einsum('ij,i', scattering_matrix_angle_reduced, simulated_DFlux) * 2 #the *2 is because this is a surface-normal flux but the RDCs want a omnidirectional flux
     return transmitted
 
 def visualize_scattering_matrix():
