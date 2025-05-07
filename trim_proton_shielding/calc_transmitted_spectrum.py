@@ -63,14 +63,14 @@ def calc_transmitted_spectrum():
     # radian angles
     angles_rad = config.ANGLES * np.pi / 180
     #calculate angle factors
-    angle_factors = 0.5 * np.sin(angles_rad) * np.cos(angles_rad)
+    angle_factors = np.sin(angles_rad)/2 #two from assuming infinite back-shield (2pi/4pi)
     #broadcast the angle factors and scattering matrix together
     scattering_matrix_angles = scattering_matrix * angle_factors
     #integrate over the angles of incidence
     scattering_matrix_angle_reduced = np.trapezoid(scattering_matrix_angles, angles_rad)
     #product sum with the incident spectrum to get the transmitted one
     simulated_DFlux = numerics.calc_DFlux(config.SIMULATED_SPECTRUM[:,1])
-    transmitted = np.einsum('ij,i', scattering_matrix_angle_reduced, simulated_DFlux) * 2 #the *2 is because this is a surface-normal flux but the RDCs want a omnidirectional flux
+    transmitted = np.einsum('ij,i', scattering_matrix_angle_reduced, simulated_DFlux)
     return transmitted
 
 def visualize_scattering_matrix():

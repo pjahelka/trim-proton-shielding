@@ -72,7 +72,7 @@ def init_grids():
 
 
 def load_spectrum():
-    """Load the incident proton spectrum and resample it onto the TRIM grid. It's an IFlux"""
+    """Load the incident proton spectrum and resample it onto the TRIM grid. It's an omnidirectional IFlux over 4pi"""
     spectrum = pd.read_csv(SETTINGS['PROTON_SPECTRUM_FILE']).to_numpy()[:,[1,2]]
     min_energy = min(spectrum[:,0])
     max_energy = max(spectrum[:,0])
