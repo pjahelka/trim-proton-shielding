@@ -3,14 +3,14 @@
 =======================================
       Data  of  TRIM  Calculation      
 =======================================
-====== TRIM Calc.=  H(1.04 MeV) ==> SiO2 - quartz (ICRU-245)(  50 um) ========
+====== TRIM Calc.=  H(37.1 MeV) ==> SiO2 - quartz (ICRU-245)(  50 um) ========
 ------------------------------------------------------------------------------
 --------------------------------------------------------------------
     Recoil/Damage Calculations made with Kinchin-Pease Estimates    
 --------------------------------------------------------------------
 Ion =  H ( 1)   Ion Mass= 001.0080
-Energy  = 1048107.E-03 keV
-Ion Angle to Surface = 6.428571428571429 degrees
+Energy  = 3719381.E-02 keV
+Ion Angle to Surface = 84.70588235294117 degrees
 ============= TARGET MATERIAL ======================================
   Layer # 1 - SiO2 - quartz (ICRU-245)
   Layer # 1 - Bottom Depth=     5.E+05 A
@@ -25,13 +25,13 @@ Target energies for target atom = Si
 ====================================================================
 Depth Range of Tabulated Data=  000000.E+00  -  500000.E+00  Angstroms
 ====================================================================
-Total Ions calculated =  000010
-Average Range         =   16301.E+01 Angstroms
-Average Straggling    =   21709.E-01 Angstroms
-Average Vacancy/Ion   =   15043.E-03
+Total Ions calculated =  000099
+Average Range         =   28890.E+01 Angstroms
+Average Straggling    =   00000.E+00 Angstroms
+Average Vacancy/Ion   =   66947.E-04
 ====================================================================
 Total Backscattered Ions=  0 
-Total Transmitted Ions  =  0 
+Total Transmitted Ions  =  99 
 ====================================================================
 See files SRIM Outputs\*.txt for tables :
    TDATA.txt    -- Details of the calculation.

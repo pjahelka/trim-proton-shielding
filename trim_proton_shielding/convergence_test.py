@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 def angles_convergence():
     """figure out how many angles of incidence we need"""
-    num_angles = [15]
+    num_angles = np.linspace(3,18,6, dtype = np.int8)
     fluences = []
     tested_angle_nums = []
     rdc = calc_equiv_fluence.load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
@@ -109,8 +109,8 @@ if __name__ == '__main__':
     config.init_grids()
     #protons_simulate_convergence()
     #protons_block_convergence()
-    #num_angles, angle_fluences = angles_convergence()
-    x, y = spectrum_energies_per_decade_convergence()
+    x, y = angles_convergence()
+    #x, y = spectrum_energies_per_decade_convergence()
     #x, y = thickness_sweep()
     print(x)
     print(y)

@@ -63,7 +63,7 @@ def calc_transmitted_spectrum():
     # radian angles
     angles_rad = config.ANGLES * np.pi / 180
     #calculate angle factors
-    angle_factors = np.sin(angles_rad)/2 #two from assuming infinite back-shield (2pi/4pi)
+    angle_factors = np.sin(angles_rad)#don't divide by 2 because the RDCs already assume infinite back shielding
     #broadcast the angle factors and scattering matrix together
     scattering_matrix_angles = scattering_matrix * angle_factors
     #integrate over the angles of incidence

@@ -5,20 +5,20 @@
 TRIM  Version  Number  /  Calculation Name 
 "SRIM-2013.00"    "H (10) into Layer 1                     "
 ION DATA:At.Numb, Mass(amu), Energy (keV) , Angle to Target
-          1     1.0080  1.0481E+03    06.4
+          1     1.0080  3.7194E+04    84.7
 ION NUMB: Current, Total, AutoSave, Transmitted, Backscattered 
-        10 10  32000    0    0
+        100 100  32000    99    0
 CURRENT ION: Energy(eV),  Depth (X,Y,Z), Trajectory: Cos(X,Y,Z), Sin(X)
-8.24250E-01 1.62360E+05 2.10925E+04 -7.38172E+02 -0.844864 0.344818 0.409029 0.534981
+3.54406E+07 5.00000E+05 5.40471E+06 -2.62200E+04 0.095448 0.995407 -0.007390 0.995434
 ION AVGS:  Range,      Straggling,   Vacancies/Ion
-        1.6301E+05   2.1714E+03   1.5043E+01
+        2.8890E+05   0.0000E+00   6.6947E+00
 ION SUMS:  Range,Straggling,(Vacancies,Replacements,Interstitials)/Ang.
-1.63014E+006  2.65782E+011  4.33415E+016  7.06904E+021  3.00852E-002  0.00000E+000  0.00000E+000  0.00000E+000
+2.88903E+005  8.34647E+010  2.41132E+016  6.96635E+021  1.33894E-001  0.00000E+000  0.00000E+000  0.00000E+000
 Ion Y-Z Lateral Data :  Range, Straggling, Kurtosis, Radial Dev.
-1.82004E+005  3.56453E+009  2.04033E+005  4.34708E+009
-2.04033E+004  4.29111E+003  1.82004E+004  1.88800E+004  1.62357E+005
+6.78639E+007  4.60551E+015  6.80158E+007  4.62614E+015
+6.80158E+007  0.00000E+000  6.78639E+007  0.00000E+000  5.00000E+005
 Cascade Type, FileFLAGS: Sputter, Ranges, Backscatter, Transmit, Collisions, Random Seeds(2)
-  1 0 0 0 1 0 1 2091541429 784260276
+  1 0 0 0 1 0 1 1713083094 1153959317
 TGT DATA: ------- Numb.Elements, Numb.Layers -----------------
                        2           1
 TGT DATA: Atomic Numb, Mass,  Disp., Binding, Surf. Energy(eV)

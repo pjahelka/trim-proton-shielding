@@ -4,7 +4,7 @@
       ION and final RECOIL ATOM Distributions     
  See  SRIM Outputs\TDATA.txt for calculation details
 ==================================================
-====== TRIM Calc.=  H(1.04 MeV) ==> SiO2 - quartz (ICRU-245)(  50 um) ========
+====== TRIM Calc.=  H(37.1 MeV) ==> SiO2 - quartz (ICRU-245)(  50 um) ========
 ------------------------------------------------------------------------------
 --------------------------------------------------------------------
     Recoil/Damage Calculations made with Kinchin-Pease Estimates    
@@ -13,22 +13,17 @@
   There are NO RECOILS unless a full TRIM calculation is made.   
 ----------------------------------------------------------------
 See file :  SRIM Outputs\TDATA.txt   for details of calculation
- Ion    =  H   Energy = 1048.1067512269437  keV
+ Ion    =  H   Energy = 37193.81109435677  keV
 ============= TARGET MATERIAL ======================================
 Layer  1 : SiO2 - quartz (ICRU-245)
 Layer Width =     5.E+05 A   Layer # 1- Density = 6.975E22 atoms/cm3 = 2.32 g/cm3
   Layer # 1-  O = 66.6 Atomic Percent = 53.2 Mass Percent
   Layer # 1- Si = 33.3 Atomic Percent = 46.7 Mass Percent
 ====================================================================
- Total Ions calculated =10.00
- Ion Average Range =   163.0E+03 A   Straggling =   217.1E+01 A
- Ion Lateral Range =   182.0E+02 A   Straggling =   188.8E+02 A
- Ion Radial  Range =   204.0E+02 A   Straggling =   429.1E+01 A
-====================================================================
- Range Skewne- = 000.3571  &= [-(X-Rp)^3]/[N*Straggle^3]
- Range Kurtosis = -000.5520  &= [-(X-Rp)^4]/[N*Straggle^4]
- Statistical definitions above are those used in VLSI implant modelling.
-====================================================================
+ Total Ions calculated =99.05
+ Ion Average Range =   288.9E+03 A   Straggling =   000.0E+00 A
+ Ion Lateral Range =   678.6E+05 A   Straggling =   000.0E+00 A
+ Ion Radial  Range =   680.2E+05 A   Straggling =   000.0E+00 A
 =================================================================
   Table Distribution Units are >>>  (Atoms/cm3) / (Atoms/cm2)  <<<  
 =================================================================
@@ -66,9 +61,9 @@ Layer Width =     5.E+05 A   Layer # 1- Density = 6.975E22 atoms/cm3 = 2.32 g/cm
 145000.E+00  0.0000E+00  0.0000E+00
 150000.E+00  0.0000E+00  0.0000E+00
 155000.E+00  0.0000E+00  0.0000E+00
-160000.E+00  2.0000E+03  0.0000E+00
-165000.E+00  1.2000E+04  0.0000E+00
-170000.E+00  6.0000E+03  0.0000E+00
+160000.E+00  0.0000E+00  0.0000E+00
+165000.E+00  0.0000E+00  0.0000E+00
+170000.E+00  0.0000E+00  0.0000E+00
 175000.E+00  0.0000E+00  0.0000E+00
 180000.E+00  0.0000E+00  0.0000E+00
 185000.E+00  0.0000E+00  0.0000E+00
@@ -92,7 +87,7 @@ Layer Width =     5.E+05 A   Layer # 1- Density = 6.975E22 atoms/cm3 = 2.32 g/cm
 275000.E+00  0.0000E+00  0.0000E+00
 280000.E+00  0.0000E+00  0.0000E+00
 285000.E+00  0.0000E+00  0.0000E+00
-290000.E+00  0.0000E+00  0.0000E+00
+290000.E+00  2.0192E+02  0.0000E+00
 295000.E+00  0.0000E+00  0.0000E+00
 300000.E+00  0.0000E+00  0.0000E+00
 305000.E+00  0.0000E+00  0.0000E+00
