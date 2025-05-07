@@ -26,7 +26,7 @@ def angles_convergence():
 
 def spectrum_energies_per_decade_convergence():
     """Test energies per decade of incident spectrum"""
-    energies_per_decades = np.logspace(1, 7, num = 7, base = 2)
+    energies_per_decades = np.logspace(1, 8, num = 8, base = 2)
     fluences = []
     tested_numbers = []
     rdc = calc_equiv_fluence.load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
@@ -110,6 +110,8 @@ if __name__ == '__main__':
     #protons_simulate_convergence()
     #protons_block_convergence()
     #num_angles, angle_fluences = angles_convergence()
-    #num_per_dec, num_per_dec_fluences = spectrum_energies_per_decade_convergence()
-    x, y = thickness_sweep()
+    x, y = spectrum_energies_per_decade_convergence()
+    #x, y = thickness_sweep()
+    print(x)
+    print(y)
     print(0)

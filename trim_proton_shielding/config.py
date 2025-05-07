@@ -82,6 +82,16 @@ def load_spectrum():
     resampled_spectrum = numerics.log_interp(new_energies, spectrum[:, 0], spectrum[:, 1])
     return np.transpose([new_energies,resampled_spectrum])
 
+def plot_incident_spectrum():
+    import matplotlib.pyplot as plt
+    import scienceplots
+    plt.style.use('science')
+    plt.plot(SIMULATED_SPECTRUM[:,0], SIMULATED_SPECTRUM[:,1])
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.xlabel('Energy, MeV')
+    plt.ylabel(r'Fluence, $\mathrm{cm}^{-2}$')
+    plt.show()
 
 if __name__ == '__main__':
     import pprint
@@ -90,3 +100,5 @@ if __name__ == '__main__':
     read_config(example_config)
     init_grids()
     pprint.pp(SETTINGS)
+    plot_incident_spectrum()
+    print(0)

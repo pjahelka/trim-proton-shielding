@@ -14,8 +14,7 @@ def load_proton_rdc(rdc_file):
 
     Use power law extrapolation for the UV and IR"""
     #load rdc file
-    rdc = pd.read_csv(rdc_file)
-    rdc = rdc.to_numpy()
+    rdc = pd.read_csv(rdc_file).to_numpy()
     #get the data for fitting
     ir_data = rdc[:config.SETTINGS['POWER_LAW_FIT_POINTS']]
     uv_data = rdc[-config.SETTINGS['POWER_LAW_FIT_POINTS']:]
