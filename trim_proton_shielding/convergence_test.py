@@ -47,7 +47,7 @@ def spectrum_energies_per_decade_convergence():
     return energies_per_decades, fluences
 
 def protons_simulate_convergence():
-    protons = np.logspace(1, 4, num = 4)
+    protons = [1E4]
     fluences = []
     tested_numbers = []
     rdc = calc_equiv_fluence.load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
@@ -107,11 +107,13 @@ if __name__ == '__main__':
     example_config = root / 'example_config.ini'
     config.read_config(example_config)
     config.init_grids()
-    #protons_simulate_convergence()
+    x, y = protons_simulate_convergence()
     #protons_block_convergence()
-    x, y = angles_convergence()
+    #x, y = angles_convergence()
     #x, y = spectrum_energies_per_decade_convergence()
     #x, y = thickness_sweep()
     print(x)
     print(y)
     print(0)
+
+

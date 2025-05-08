@@ -4,7 +4,7 @@
         Replacement Collisions       
  See SRIM Outputs\TDATA.txt for calc. details   
 =========================================
-====== TRIM Calc.=  H(37.1 MeV) ==> SiO2 - quartz (ICRU-245)(  50 um) ========
+====== TRIM Calc.=  H(2.22 MeV) ==> SiO2 - quartz (ICRU-245)(  50 um) ========
 ------------------------------------------------------------------------------
 --------------------------------------------------------------------
     Recoil/Damage Calculations made with Kinchin-Pease Estimates    
