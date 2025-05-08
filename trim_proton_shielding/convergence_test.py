@@ -83,34 +83,16 @@ def protons_block_convergence():
         print(f'{fluence:.2e}')
     return protons, fluences
 
-def thickness_sweep():
-    thicknesses = np.linspace(5, 100, num = 20)
-    fluences = []
-    tested_numbers = []
-    rdc = calc_equiv_fluence.load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
-    for thickness in thicknesses:
-        config.SETTINGS['SHIELD_THICKNESS'] = thickness
-        calc_transmitted_spectrum.calc_scattering_matrix()
-        spectrum = calc_transmitted_spectrum.calc_transmitted_spectrum()
-        fluence = calc_equiv_fluence.calc_fluence(spectrum, rdc, config.SETTINGS['PROTONS_TO_ELECTRONS'])
-        fluences.append(fluence)
-        tested_numbers.append(thickness)
-        plt.plot(tested_numbers, fluences)
-        plt.show()
-        print(thickness)
-        print(f'{fluence:.2e}')
-    return thicknesses, fluences
-
 if __name__ == '__main__':
     from pathlib import Path
     root = Path.cwd().parent
     example_config = root / 'example_config.ini'
     config.read_config(example_config)
     config.init_grids()
-    x, y = protons_simulate_convergence()
+    #x, y = protons_simulate_convergence()
     #protons_block_convergence()
     #x, y = angles_convergence()
-    #x, y = spectrum_energies_per_decade_convergence()
+    x, y = spectrum_energies_per_decade_convergence()
     #x, y = thickness_sweep()
     print(x)
     print(y)
