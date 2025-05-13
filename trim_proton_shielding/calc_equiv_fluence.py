@@ -56,6 +56,8 @@ if __name__ == "__main__":
     config.init_grids()
 
     rdc = load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
+    rdc_df = pd.DataFrame(np.transpose([config.DAMAGE_ENERGIES, rdc]), columns = ['Energy, MeV', 'RDC'])
+    rdc_df.to_csv(root / 'rdc.csv')
     import matplotlib.pyplot as plt
     plt.plot(config.DAMAGE_ENERGIES, rdc)
     raw_rdc = pd.read_csv(config.SETTINGS['PROTON_RDC_FILE']).to_numpy()

@@ -23,13 +23,15 @@ def extract_data(file):
     data = []
     data_line = False
     trapped = False #for figuring out if we need to deal with duration
+    duration = 0
     with open(file) as f:
         lines = f.readlines()
-        duration = re.findall(r"\d+\.\d+", lines[config.SETTINGS['TRAPPED_DURATION_LINE']])  # extract duration in days
-        if duration:
-            duration = float(duration[0])
-            duration = duration * 31.5E6  # convert to seconds
         for line in lines:
+            if line.startswith('\'Duration:'): #search for duration line
+                if duration != 0: #if already defined, skip, because the first is the mission duration
+                    continue
+                duration_day = float(re.findall(r"\d+\.\d+", line)[0]) #duration in days
+                duration = duration_day * 86400 #convert to seconds
             if line.startswith(config.SETTINGS['SOLAR_LAST_HEADER']): #figure out if start of data block and if trapped or solar
                 data_line = True
                 continue
