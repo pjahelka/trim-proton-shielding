@@ -1,3 +1,5 @@
+import pandas as pd
+
 import config
 import numpy as np
 import calc_transmitted_spectrum
@@ -47,7 +49,7 @@ def spectrum_energies_per_decade_convergence():
     return energies_per_decades, fluences
 
 def protons_simulate_convergence():
-    protons = [1E4]
+    protons = np.logspace(0, 3, num = 4, base = 10)
     fluences = []
     tested_numbers = []
     rdc = calc_equiv_fluence.load_proton_rdc(config.SETTINGS['PROTON_RDC_FILE'])
@@ -89,13 +91,15 @@ if __name__ == '__main__':
     example_config = root / 'example_config.ini'
     config.read_config(example_config)
     config.init_grids()
-    #x, y = protons_simulate_convergence()
-    #protons_block_convergence()
-    #x, y = angles_convergence()
-    x, y = spectrum_energies_per_decade_convergence()
-    #x, y = thickness_sweep()
-    print(x)
-    print(y)
-    print(0)
+    #foo = protons_simulate_convergence()
+    #pd.DataFrame(np.transpose(foo)).to_csv('100um_protons_convergence.csv')
+    config.read_config(example_config)
+    config.init_grids()
+    #foo = angles_convergence()
+    #pd.DataFrame(np.transpose(foo)).to_csv('100um_angles_convergence.csv')
+    config.read_config(example_config)
+    config.init_grids()
+    foo = spectrum_energies_per_decade_convergence()
+    pd.DataFrame(np.transpose(foo)).to_csv('10um_spec_convergence.csv')
 
 

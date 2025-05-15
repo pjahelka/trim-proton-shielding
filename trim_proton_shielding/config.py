@@ -20,7 +20,9 @@ def read_config(config_file):
     SETTINGS['PROTON_SPECTRUM_FILE'] = Path(config['File Paths']['PROTON_SPECTRUM_FILE'])
     SETTINGS['SCATTERING_FILE_PATH'] = Path(config['File Paths']['SCATTERING_FILE_PATH'])
     SETTINGS['PROTON_RDC_FILE'] = Path(config['File Paths']['PROTON_RDC_FILE'])
+    SETTINGS['TRIM TEMPLATES'] = Path(config['File Paths']['TRIM_TEMPLATES'])
     SETTINGS['SHIELD_THICKNESS'] = config['Shielding'].getfloat('SHIELD_THICKNESS')
+    SETTINGS['SHIELD_MATERIAL'] = config['Shielding']['SHIELD_MATERIAL']
     SETTINGS['PROTONS_SIMULATE'] = config['TRIM Config'].getint('PROTONS_SIMULATE')
     SETTINGS['PROTONS_TEST_TRANSMIT'] = config['TRIM Config'].getint('PROTONS_TEST_TRANSMIT')
     SETTINGS['PROTONS_TEST_BLOCK'] = config['TRIM Config'].getint('PROTONS_TEST_BLOCK')

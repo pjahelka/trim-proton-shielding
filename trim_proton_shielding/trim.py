@@ -7,9 +7,14 @@ import config
 import collections
 import subprocess
 import numerics
+import shutil
+import re
 
 def config_trim(energy, thickness, angle, particle_number):
     """setup TRIM.IN and TRIMAUTO for a trim simulation energy in MeV, thickness in um"""
+    #copy the right TRIM.IN template for the shield material
+    shutil.copyfile(config.SETTINGS['TRIM TEMPLATES'] / f'TRIM_{config.SETTINGS['SHIELD_MATERIAL']}.IN',
+                    config.SETTINGS['TRIM_PATHS']['TRIM_IN'])
     with open(config.SETTINGS['TRIM_PATHS']['TRIM_AUTO'], 'r') as file:
         #make sure TRIM is in auto made
         lines = file.readlines()
@@ -22,7 +27,12 @@ def config_trim(energy, thickness, angle, particle_number):
         lines[2] = f'     1   1.008      {energy * 1E3}       {angle}    {particle_number}        1     1E6\n' #multiply by 1000 for MeV -> keV
         lines[6] = '0 0 1 0 0 0\n'  #save new transmission file
         lines[10] = f'5 0 {thickness*10*1000}\n' #thickness is um -> angstroms
-        lines[16] = f'1 "SiO2 - quartz (ICRU-245)" {thickness*10*1000} 2.32 .666667 .333333\n' #set thickness of glass
+        split_line = lines[16].split('"') #split into index, description string, and the property numbers
+        split_line[-1] = " ".join(split_line[-1].split()).split(' ') #split properties, first is thickness
+        split_line[-1][0] = str(thickness*10*1000) #thickness is um -> angstroms
+        split_line[-1] = ' ' + ' '.join(split_line[-1]) #start putting the string back together
+        assembled_line = '"'.join(split_line) + '\n'
+        lines[16] = assembled_line
     with open(config.SETTINGS['TRIM_PATHS']['TRIM_IN'], 'w') as file:
         file.writelines(lines)
 
@@ -82,6 +92,6 @@ if __name__ == '__main__':
     example_config = root / 'example_config.ini'
     config.read_config(example_config)
     config.init_grids()
-    config_trim(1, 10, 0, 1E4)
+    config_trim(1, 2, 0, 1E4)
     run_trim()
 
