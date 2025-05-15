@@ -27,12 +27,16 @@ def config_trim(energy, thickness, angle, particle_number):
         lines[2] = f'     1   1.008      {energy * 1E3}       {angle}    {particle_number}        1     1E6\n' #multiply by 1000 for MeV -> keV
         lines[6] = '0 0 1 0 0 0\n'  #save new transmission file
         lines[10] = f'5 0 {thickness*10*1000}\n' #thickness is um -> angstroms
-        split_line = lines[16].split('"') #split into index, description string, and the property numbers
+        #find the line that specifies the shield thickness. Can't use number in case of varying number of elements in material.
+        for index, line in enumerate(lines):
+            if line.startswith('Numb.'):
+                shield_line = index + 1
+        split_line = lines[shield_line].split('"') #split into index, description string, and the property numbers
         split_line[-1] = " ".join(split_line[-1].split()).split(' ') #split properties, first is thickness
         split_line[-1][0] = str(thickness*10*1000) #thickness is um -> angstroms
         split_line[-1] = ' ' + ' '.join(split_line[-1]) #start putting the string back together
         assembled_line = '"'.join(split_line) + '\n'
-        lines[16] = assembled_line
+        lines[shield_line] = assembled_line
     with open(config.SETTINGS['TRIM_PATHS']['TRIM_IN'], 'w') as file:
         file.writelines(lines)
 

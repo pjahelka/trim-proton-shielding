@@ -1,29 +1,31 @@
 ==> SRIM-2013.00 This file controls TRIM Calculations.
 Ion: Z1 ,  M1,  Energy (keV), Angle,Number,Bragg Corr,AutoSave Number.
-     1   1.008      1000.0       0    10000.0        1     1E6
+     1   1.008      3196.434168765112       38.57142857142857    10        1     1E6
 Cascades(1=No;2=Full;3=Sputt;4-5=Ions;6-7=Neutrons), Random Number Seed, Reminders
                       1                                   0       0
 Diskfiles (0=no,1=yes): Ranges, Backscatt, Transmit, Sputtered, Collisions(1=Ion;2=Ion+Recoils), Special EXYZ.txt file
 0 0 1 0 0 0
 Target material : Number of Elements & Layers
-"H (10) into Layer 1                     "       2               1
+"H (10) into Layer 1                     "       4               1
 PlotType (0-5); Plot Depths: Xmin, Xmax(Ang.) [=0 0 for Viewing Full Target]
-5 0 20000
+5 0 100000.0
 Target Elements:    Z   Mass(amu)
-Atom 1 = O =         8  15.999
-Atom 2 = Si =       14  28.086
-Layer   Layer Name /               Width Density      O(8)  Si(14)
-Numb.   Description                (Ang) (g/cm3)    Stoich  Stoich
-1 "SiO2 - quartz (ICRU-245)" 20000 2.32 .666667 .333333
+Atom 1 = Si =       14  28.086
+Atom 2 = C =         6  12.011
+Atom 3 = O =         8  15.999
+Atom 4 = H =         1   1.008
+Layer   Layer Name /               Width Density    Si(14)    C(6)    O(8)    H(1)
+Numb.   Description                (Ang) (g/cm3)    Stoich  Stoich  Stoich  Stoich
+ 1      "PDMS" 100000.0 .97 .1 .2 .1 .6
 0  Target layer phases (0=Solid, 1=Gas)
 0 
 Target Compound Corrections (Bragg)
  1  
 Individual target atom displacement energies (eV)
-      28      15
+      15      28      28      10
 Individual target atom lattice binding energies (eV)
-       3       2
+       2       3       3       3
 Individual target atom surface binding energies (eV)
-       2     4.7
+     4.7    7.41       2       2
 Stopping Power Version (1=2011, 0=2011)
  0 
